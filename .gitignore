@@ -6,3 +6,6 @@ priv
 *.plt
 *.exe
 *.dll
+*.log.txt
+*.bin
+*.bin.readme.txt
