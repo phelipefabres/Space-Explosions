@@ -9,3 +9,4 @@ priv
 *.log.txt
 *.bin
 *.bin.readme.txt
+*.user.data

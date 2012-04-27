@@ -3,7 +3,7 @@
 //Designer: Phelipe Fabres
 //Modelo de cada objeto
 
-class Level : State
+class Level : GameState
 {
 
 	uint deadTime;
@@ -16,16 +16,20 @@ class Level : State
 		level = _level;
 		tempo = 0;
 		cont = 0;
+		GameStateProperties props;
+		super(_level, "scenes/start.esc", @props);
 	}
 	
 	
-	void start()
+	/*void start()
 	{
 		LoadScene("scenes/start.esc",DEFAULT_ONSCENELOADED,DEFAULT_ONSCENEUPDATED);
-	}
+	}*/
 	
-	void onSceneLoaded()
+	void preLoop()
 	{
+		GameState::preLoop();
+		
 		SetAmbientLight(vector3(1,1,1));
 		
 		
@@ -42,9 +46,10 @@ class Level : State
 	
 	}
 	
-	void onSceneUpdated()
+	void loop()
 	{
-	
+		GameState::loop();
+		
 		ETHInput @ input =  GetInputHandle();
 	
 		if(input.GetKeyState(K_ESC) == KS_HIT)
@@ -58,24 +63,11 @@ class Level : State
 		{
 			deadTime += GetLastFrameElapsedTime();
 			StopSample("soundfx/trilha.mp3");
+		
 			if(deadTime >= 3000)
 				g_stateManager.setState(Menu());
-				
-			
 		}
-		/*
-		//se não existir mais entidades na cena, ela acaba
-		if(SeekEntity("asteroid.ent") is null && SeekEntity("nave.ent") is null)
-		{
-			deadTime += GetLastFrameElapsedTime();
-			
-			StopSample("soundfx/trilha.mp3");
-			
-			if(deadTime >= 3000)
-				g_stateManager.setState(Menu());
-				
-			
-		}*/
+		
 		
 			if (cont < 2)
 				tempo += GetLastFrameElapsedTime();

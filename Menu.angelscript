@@ -2,26 +2,39 @@
 //Jogo: Space Explosions
 //Designer: Phelipe Fabres
 //Modelo de cada objeto
-class Menu : State
+
+class Menu : MainMenu
 {
 	
 	
-	void start()
+	/*void start()
 	{
 		LoadScene("empty",DEFAULT_ONSCENELOADED,DEFAULT_ONSCENEUPDATED);
-	}
-	void onSceneLoaded()
+	}*/
+	Menu()
 	{
-	
+		MainMenuProperties props;
+		props.showMusicSwitch = true;
+		props.showSoundSwitch = true;
+		props.titleSprite = "sprites/logo_inicio.png";
+		props.playButton = "sprites/start_game.png";
+		props.buttonNormPos = vector2(0.5f,0.75f);
+		props.titlePos = vector2(0.5f, 0.25f);
+		super("empty",@props);
+	}
+	void preLoop()
+	{
+		MainMenu::preLoop();
 		//carrega os sprites na memória
-		LoadSprite("sprites/logo_inicio.png");
-		LoadSprite("sprites/start_game.png");
+		//LoadSprite("sprites/logo_inicio.png");
+		//LoadSprite("sprites/start_game.png");
 	
 	}
-	void onSceneUpdated()
+	void loop()
 	{
 	
-		ETHInput @ input =  GetInputHandle();
+		MainMenu::loop();
+		/*ETHInput @ input =  GetInputHandle();
 		
 		vector2 cursorPos = input.GetCursorPos();
 		vector2 buttonPos = GetScreenSize() * vector2(0.5f,0.75f);
@@ -42,7 +55,7 @@ class Menu : State
 		SetSpriteOrigin("sprites/logo_inicio.png",vector2(0.5f,0.5f));
 		DrawSprite("sprites/logo_inicio.png",GetScreenSize() * vector2(0.5f,0.25f),ARGB(255,255,255,255));
 		SetSpriteOrigin("sprites/start_game.png",vector2(0.5f,0.5f));
-		DrawSprite("sprites/start_game.png",buttonPos,ARGB(255,255,255,255));
+		DrawSprite("sprites/start_game.png",buttonPos,ARGB(255,255,255,255));*/
 	
 	}
 		
