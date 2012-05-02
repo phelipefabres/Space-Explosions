@@ -11,6 +11,8 @@ class Menu : MainMenu
 	{
 		LoadScene("empty",DEFAULT_ONSCENELOADED,DEFAULT_ONSCENEUPDATED);
 	}*/
+	
+	//novo construtor, seta as propriedades do MainMenuProperties e chama o do Pai
 	Menu()
 	{
 		MainMenuProperties props;

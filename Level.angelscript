@@ -10,21 +10,22 @@ class Level : GameState
 	uint level;
 	uint tempo;
 	uint cont;
+	uint tempo_chefe;
+		uint cont2;
+		
 	Level(uint _level)
 	{
 		deadTime = 0;
 		level = _level;
 		tempo = 0;
 		cont = 0;
+		tempo_chefe = 0;
+		cont2 = 0;
 		GameStateProperties props;
 		super(_level, "scenes/start.esc", @props);
 	}
 	
 	
-	/*void start()
-	{
-		LoadScene("scenes/start.esc",DEFAULT_ONSCENELOADED,DEFAULT_ONSCENEUPDATED);
-	}*/
 	
 	void preLoop()
 	{
@@ -46,9 +47,11 @@ class Level : GameState
 	
 	}
 	
+	
 	void loop()
 	{
 		GameState::loop();
+		
 		
 		ETHInput @ input =  GetInputHandle();
 	
@@ -59,9 +62,9 @@ class Level : GameState
 		}
 		
 		//se a nave principal colidir, a cena acaba
-		if(SeekEntity("Destroyer") is null || (SeekEntity("asteroid.ent") is null && SeekEntity("nave.ent") is null) )
+		if(SeekEntity("Destroyer") is null || (SeekEntity("asteroid.ent") is null && SeekEntity("nave.ent") is null) && SeekEntity("nave_chefe.ent") is null)
 		{
-			deadTime += GetLastFrameElapsedTime();
+			deadTime += g_timeManager.getLastFrameElapsedTime();
 			StopSample("soundfx/trilha.mp3");
 		
 			if(deadTime >= 3000)
@@ -69,26 +72,43 @@ class Level : GameState
 		}
 		
 		
-			if (cont < 2)
-				tempo += GetLastFrameElapsedTime();
+		if (cont < 10)
+			tempo += g_timeManager.getLastFrameElapsedTime();
 			
-			//criação do asteroide na cena
-			ETHEntity @ ambulante;
-			
-			
-			//a cada dois segundos ele "desce" na tela
-			if(tempo >= 2000)
-			{
-				
-				AddEntity("asteroid.ent",vector3(randF(GetScreenSize().x),30,0), ambulante);
-				ambulante.SetString("tipo", "ambulante");//seta o tipo dele como ambulante para se diferenciar do outro tipo
-				tempo =0;
-				cont++;
-			}
-			
-			
+		//criação do asteroide na cena
+		ETHEntity @ ambulante;
+		ETHEntity @ auxiliar;
+		ETHEntity @ chefe;
+		
+		//a cada dois segundos ele "desce" na tela
+		if(tempo >= 2000)
+		{
+			AddEntity("asteroid.ent",vector3(randF(GetScreenSize().x),-30,0), ambulante);
+			AddEntity("nave_aux.ent",vector3(randF(GetScreenSize().x),-30,0),auxiliar);
+			ambulante.SetString("tipo", "ambulante");//seta o tipo dele como ambulante para se diferenciar do outro tipo
+			tempo =0;
+			cont++;
+		}
+		
+		if(cont2<5)
+			tempo_chefe += g_timeManager.getLastFrameElapsedTime();
+		
+		
+		
+		if(tempo_chefe >= 1000)
+		{
+			AddEntity("nave_chefe.ent",vector3(randF(GetScreenSize().x),-30,0),chefe);
+			chefe.SetUInt("tiro",0);
+			tempo_chefe=0;
+			cont2++;
+		}
+		
+		
 		
 		DrawText(vector2(0,200), "Entidades = "+ GetNumEntities(),"Verdana14_shadow.fnt", ARGB(250,255,255,255));
+		
+		
+		
 	}
 
 }
