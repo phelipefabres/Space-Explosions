@@ -10,6 +10,13 @@
 void ETHCallback_nave(ETHEntity @ nave)
 {
 	nave.SetColor(vector3(1,0,0));
+	
+	if(nave.GetInt("hp") <= 0)
+	{
+		AddEntity("explosion.ent",nave.GetPosition(),0);
+		DeleteEntity(nave);
+		PlaySample("soundfx/explosion_huge.mp3");
+	}
 }
 
 
@@ -52,26 +59,23 @@ void ETHCallback_Destroyer(ETHEntity @ nave)
 	}
 	
 	
-	//delimitando o movimento da Destroyer
-	if(nave.GetPositionXY().y > GetScreenSize().y)
-		nave.SetPositionXY(vector2(nave.GetPositionXY().x,GetScreenSize().y));
-	else if(nave.GetPositionXY().y < 0)
-		nave.SetPositionXY(vector2(nave.GetPositionXY().x,0));
-	else if(nave.GetPositionXY().x > GetScreenSize().x)
-		nave.SetPositionXY(vector2(GetScreenSize().x,nave.GetPositionXY().y));
-	else if(nave.GetPositionXY().x < 0)
-		nave.SetPositionXY(vector2(0,nave.GetPositionXY().y));
-	
-	
 	
 	
 	//criando o tiro a partir da nave
-	ETHEntity @ tiro;
+	
 	if(input.GetKeyState(K_SPACE) == KS_HIT)
 	{
-		AddEntity("shot.ent",nave.GetPosition(),tiro);
+		addShot(1,vector2(0,-5),nave.GetPosition());
 		PlaySample("soundfx/tiro.mp3");
-		tiro.SetString("tipo","destroyer");
+		
+	}
+	
+	if(nave.GetInt("hp") <= 0)
+	{
+		AddEntity("explosion.ent",nave.GetPosition(),0);
+		DeleteEntity(nave);
+		PlaySample("soundfx/explosion_huge.mp3");
+		return;
 	}
 	
 	//aqui estamos adicionando no array de entidades todos os buckets ao redor da minha nave, assim quando a
@@ -91,27 +95,34 @@ void ETHCallback_Destroyer(ETHEntity @ nave)
 
 	for(uint i=0; i<naveArray.size(); i++)
 	{
-		if(naveArray[i].GetEntityName() == "asteroid.ent" || naveArray[i].GetEntityName() == "nave.ent" 
-			|| naveArray[i].GetEntityName() == "nave_chefe.ent" || naveArray[i].GetEntityName() == "nave_aux.ent")
-			{
-				if(distance(nave.GetPositionXY(),naveArray[i].GetPositionXY()) < 64 )
+		if(naveArray[i].GetUInt("destrutivel") == 1)
+		{
+				if(naveArray[i].GetUInt("time") != nave.GetUInt("time"))
 				{
-					AddEntity("explosion.ent",naveArray[i].GetPosition(),0);
-					AddEntity("explosion.ent",nave.GetPosition(),0);
-					DeleteEntity(naveArray[i]);
-					DeleteEntity(nave);
+					if(distance(nave.GetPositionXY(),naveArray[i].GetPositionXY()) < 64 )
+					{
+					print(naveArray[i].GetEntityName());
+					naveArray[i].AddToInt("hp",-1);
+					nave.AddToInt("hp",-1);
 				
 								
-				if(naveArray[i].GetEntityName() == "asteroid.ent" )
-					PlaySample("soundfx/asteroide_explosao.mp3");
-				else
-					PlaySample("soundfx/explosion_huge.mp3");
-					
+							
 				
-				
-			}
+					}
+			   }
 		}
 		
 	}
+	
+	
+	//delimitando o movimento da Destroyer
+	if(nave.GetPositionXY().y > GetScreenSize().y)
+		nave.SetPositionXY(vector2(nave.GetPositionXY().x,GetScreenSize().y));
+	else if(nave.GetPositionXY().y < 0)
+		nave.SetPositionXY(vector2(nave.GetPositionXY().x,0));
+	else if(nave.GetPositionXY().x > GetScreenSize().x)
+		nave.SetPositionXY(vector2(GetScreenSize().x,nave.GetPositionXY().y));
+	else if(nave.GetPositionXY().x < 0)
+		nave.SetPositionXY(vector2(0,nave.GetPositionXY().y));
 	
 }

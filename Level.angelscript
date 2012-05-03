@@ -62,7 +62,7 @@ class Level : GameState
 		}
 		
 		//se a nave principal colidir, a cena acaba
-		if(SeekEntity("Destroyer") is null || (SeekEntity("asteroid.ent") is null && SeekEntity("nave.ent") is null) && SeekEntity("nave_chefe.ent") is null)
+		if(SeekEntity("asteroid.ent") is null && SeekEntity("nave.ent") is null && SeekEntity("nave_chefe.ent") is null)
 		{
 			deadTime += g_timeManager.getLastFrameElapsedTime();
 			StopSample("soundfx/trilha.mp3");
@@ -70,7 +70,14 @@ class Level : GameState
 			if(deadTime >= 3000)
 				g_stateManager.setState(Menu());
 		}
-		
+		else if(SeekEntity("Destroyer") is null )
+		{
+			if(m_layerManager.getCurrentLayer().getName() != "GameOverLayer")
+			{
+				addLayer(GameOverLayer());
+				m_layerManager.setCurrentLayer("GameOverLayer");
+			}
+		}
 		
 		if (cont < 10)
 			tempo += g_timeManager.getLastFrameElapsedTime();

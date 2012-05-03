@@ -4,6 +4,9 @@
 #include "CallBack_asteroid_tiro.angelscript"
 #include "CallBack_nave.angelscript"
 #include "CallBack_naves_inimigas.angelscript"
+#include "functions.angelscript"
+#include "GameOverLayer.angelscript"
+
 
 void main()
 {

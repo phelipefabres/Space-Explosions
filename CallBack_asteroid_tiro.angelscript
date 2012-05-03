@@ -23,6 +23,13 @@ void ETHCallback_asteroid(ETHEntity@ asteroid)
 		if(asteroid.GetPositionXY().y > GetScreenSize().y)
 			DeleteEntity(asteroid);
 	}
+	
+	if(asteroid.GetInt("hp") <= 0)
+	{
+		AddEntity("explosion.ent",asteroid.GetPosition(),0);
+		DeleteEntity(asteroid);
+		PlaySample("soundfx/asteroide_explosao.mp3");
+	}
 }
 
 //callback do tiro
@@ -31,10 +38,10 @@ void ETHCallback_asteroid(ETHEntity@ asteroid)
 void ETHCallback_shot(ETHEntity@ shot)
 {
 
-	shot.SetFloat("speed",60.0f);
+	
 	//movimento do tiro, no caso a direçao e a velocidade
 	
-		shot.AddToPositionXY(g_timeManager.unitsPerSecond(vector2(0,-5))*shot.GetFloat("speed"));
+		shot.AddToPositionXY(g_timeManager.unitsPerSecond(shot.GetVector2("direcao"))*shot.GetFloat("speed"));
 	
 		
 		
@@ -46,56 +53,25 @@ void ETHCallback_shot(ETHEntity@ shot)
 
 		for(uint i=0; i<shotArray.size(); i++)
 		{
-			if(shotArray[i].GetEntityName() == "asteroid.ent" || shotArray[i].GetEntityName() == "nave.ent" 
-				|| shotArray[i].GetEntityName() == "nave_chefe.ent" || shotArray[i].GetEntityName() == "nave_aux.ent")
+			
+			if(shotArray[i].GetUInt("destrutivel") == 1)
 			{
-				if(distance(shot.GetPositionXY(),shotArray[i].GetPositionXY()) < 40 )
-				{
-						if(shotArray[i].GetEntityName() == "nave_chefe.ent" || shotArray[i].GetEntityName() == "nave_aux.ent")
+				
+					if(shotArray[i].GetUInt("time") != shot.GetUInt("time"))
+					{
+						if(distance(shot.GetPositionXY(),shotArray[i].GetPositionXY()) < 40 )
 						{
 							shotArray[i].AddToInt("hp",-1);
-							//print(shotArray[i].GetInt("hp"));
+							DeleteEntity(shot);
 						}
-						else
-						{
-							//coloca a explosão na cena antes de deletar as entidades
-							AddEntity("explosion.ent",shotArray[i].GetPosition(),0);
-							DeleteEntity(shotArray[i]);
-							
-							if(shotArray[i].GetEntityName() == "asteroid.ent" )
-								PlaySample("soundfx/asteroide_explosao.mp3");
-							else
-								PlaySample("soundfx/explosion_huge.mp3");
-						}
-						DeleteEntity(shot);
+											
 					}
 			}
-			else
-			{
-				shot.AddToPositionXY(g_timeManager.unitsPerSecond(vector2(0,10))*shot.GetFloat("speed"));
-						
-				if(shotArray[i].GetEntityName() == "Destroyer")
-				{
-					if(distance(shot.GetPositionXY(),shotArray[i].GetPositionXY()) < 40 )
-					{
-					//coloca a explosão na cena antes de deletar as entidades
-						AddEntity("explosion.ent",shotArray[i].GetPosition(),0);
-						DeleteEntity(shotArray[i]);
-						PlaySample("soundfx/explosion_huge.mp3");
-					}
-						
-					DeleteEntity(shot);
-				}
-			}
-					
-					
-					
-					
-					
-	}
+		}
+
 	
 	//se o tiro ultrapassar o limite da tela, ele é deletado
-		if(shot.GetPositionXY().y < 0)
+		if(shot.GetPositionXY().y < 0 || shot.GetPositionXY().y > GetScreenSize().y)
 				DeleteEntity(shot);
 }
 		

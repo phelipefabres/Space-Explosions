@@ -16,20 +16,19 @@ void ETHCallback_nave_chefe(ETHEntity@ chefe)
 		if(chefe.GetPositionXY().y > GetScreenSize().y)
 			DeleteEntity(chefe);
 			
-		if(chefe.GetInt("hp") == 0)
+		if(chefe.GetInt("hp") <= 0)
 		{
 			AddEntity("explosion.ent",chefe.GetPosition(),0);
 			DeleteEntity(chefe);
 			PlaySample("soundfx/explosion_huge.mp3");
 		}
 		
-		ETHEntity@ tiro;
+		
 		
 		if(chefe.GetUInt("tiro") >= 1000)
 		{
-			AddEntity("shot.ent",chefe.GetPosition(),tiro);
+			addShot(2,vector2(0,10),chefe.GetPosition());
 			PlaySample("soundfx/tiro.mp3");
-			tiro.SetString("tipo","chefe");
 			chefe.SetUInt("tiro",0);
 		}
 		
@@ -46,7 +45,7 @@ void ETHCallback_nave_aux(ETHEntity@ auxiliar)
 		if(auxiliar.GetPositionXY().y > GetScreenSize().y)
 			DeleteEntity(auxiliar);
 			
-		if(auxiliar.GetInt("hp") == 0)
+		if(auxiliar.GetInt("hp") <= 0)
 		{
 			AddEntity("explosion.ent",auxiliar.GetPosition(),0);
 			DeleteEntity(auxiliar);
