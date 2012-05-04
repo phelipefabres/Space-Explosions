@@ -1,10 +1,10 @@
 ﻿#include "ETHFramework/IncludeModules.angelscript"
 #include "Menu.angelscript"
 #include "Level.angelscript"
-#include "CallBack_asteroid_tiro.angelscript"
-#include "CallBack_nave.angelscript"
-#include "CallBack_naves_inimigas.angelscript"
-#include "functions.angelscript"
+#include "CallBack_asteroid_shot.angelscript"
+#include "CallBack_ship.angelscript"
+#include "CallBack_enemies.angelscript"
+#include "Functions.angelscript"
 #include "GameOverLayer.angelscript"
 
 

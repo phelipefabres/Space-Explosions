@@ -14,7 +14,7 @@ void ETHCallback_asteroid(ETHEntity@ asteroid)
 	
 	if(asteroid.GetString("tipo") ==  "estatico")
 		asteroid.AddToAngle(g_timeManager.unitsPerSecond(150.0f));
-	else if(asteroid.GetString("tipo") == "ambulante")
+	else if(asteroid.GetString("tipo") == "crazyAsteroid")
 	{
 		//cria o asteroide dinamicamente e faz ele se movimentar na cena
 		asteroid.AddToPositionXY(g_timeManager.unitsPerSecond(vector2(0,5))*asteroid.GetFloat("speed"));

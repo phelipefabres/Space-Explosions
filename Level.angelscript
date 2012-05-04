@@ -8,18 +8,18 @@ class Level : GameState
 
 	uint deadTime;
 	uint level;
-	uint tempo;
+	uint time;
 	uint cont;
-	uint tempo_chefe;
-		uint cont2;
+	uint timeBoss;
+	uint cont2;
 		
 	Level(uint _level)
 	{
 		deadTime = 0;
 		level = _level;
-		tempo = 0;
+		time = 0;
 		cont = 0;
-		tempo_chefe = 0;
+		timeBoss = 0;
 		cont2 = 0;
 		GameStateProperties props;
 		super(_level, "scenes/start.esc", @props);
@@ -80,33 +80,33 @@ class Level : GameState
 		}
 		
 		if (cont < 10)
-			tempo += g_timeManager.getLastFrameElapsedTime();
+			time += g_timeManager.getLastFrameElapsedTime();
 			
 		//criação do asteroide na cena
-		ETHEntity @ ambulante;
-		ETHEntity @ auxiliar;
-		ETHEntity @ chefe;
+		ETHEntity @ crazyAsteroid;
+		ETHEntity @ otherShip;
+		ETHEntity @ boss;
 		
 		//a cada dois segundos ele "desce" na tela
-		if(tempo >= 2000)
+		if(time >= 2000)
 		{
-			AddEntity("asteroid.ent",vector3(randF(GetScreenSize().x),-30,0), ambulante);
-			AddEntity("nave_aux.ent",vector3(randF(GetScreenSize().x),-30,0),auxiliar);
-			ambulante.SetString("tipo", "ambulante");//seta o tipo dele como ambulante para se diferenciar do outro tipo
-			tempo =0;
+			AddEntity("asteroid.ent",vector3(randF(GetScreenSize().x),-30,0), crazyAsteroid);
+			AddEntity("otherShip.ent",vector3(randF(GetScreenSize().x),-30,0),otherShip);
+			crazyAsteroid.SetString("tipo", "crazyAsteroid");//seta o tipo dele como ambulante para se diferenciar do outro tipo
+			time =0;
 			cont++;
 		}
 		
 		if(cont2<5)
-			tempo_chefe += g_timeManager.getLastFrameElapsedTime();
+			timeBoss += g_timeManager.getLastFrameElapsedTime();
 		
 		
 		
-		if(tempo_chefe >= 1000)
+		if(timeBoss >= 1000)
 		{
-			AddEntity("nave_chefe.ent",vector3(randF(GetScreenSize().x),-30,0),chefe);
-			chefe.SetUInt("tiro",0);
-			tempo_chefe=0;
+			AddEntity("boss.ent",vector3(randF(GetScreenSize().x),-30,0),boss);
+			boss.SetUInt("tiro",0);
+			timeBoss=0;
 			cont2++;
 		}
 		
