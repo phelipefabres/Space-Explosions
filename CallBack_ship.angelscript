@@ -4,9 +4,9 @@
 //Modelo de cada objeto
 
 
-//callback das outras naves
+//callback os the ships statics
 
-//laço contínuo do jogo para a entidade nave...aqui no caso para as naves alvos..seta apenas a cor das alvos
+
 void ETHCallback_ship(ETHEntity @ ship)
 {
 	ship.SetColor(vector3(1,0,0));
@@ -20,26 +20,25 @@ void ETHCallback_ship(ETHEntity @ ship)
 }
 
 
-//callback da Destroyer, nave principal
+//callback of the main ship, the Destroyer
 
 
-//nave "principal", contrala comandos de movimentação e velocidade além de criar o tiro
 void ETHCallback_Destroyer(ETHEntity @ ship)
 {
 	ETHInput @input = GetInputHandle();
 	
-	//variável da velocidade
+	
 	
 	float speed = g_timeManager.unitsPerSecond(120.0f);
 	
-	//se o shift estiver precionado aumenta a velocidade em 2 vz
+	//keyboard handle
 	if(input.KeyDown(K_SHIFT))
 	{
 		speed *=2.0f;
 	}
 	
 	
-	//manipulação de teclado
+	
 	if(input.KeyDown(K_UP))
 	{
 		ship.AddToPositionXY(vector2(0,-1)* speed);
@@ -61,7 +60,7 @@ void ETHCallback_Destroyer(ETHEntity @ ship)
 	
 	
 	
-	//criando o tiro a partir da nave
+	//creating a shot from the Destroyer
 	
 	if(input.GetKeyState(K_SPACE) == KS_HIT)
 	{
@@ -78,8 +77,7 @@ void ETHCallback_Destroyer(ETHEntity @ ship)
 		return;
 	}
 	
-	//aqui estamos adicionando no array de entidades todos os buckets ao redor da minha nave, assim quando a
-	//distância for pequena e eles se colidirem minha nave principal explode.
+	//control of colision from the Destroyer with the other "things" in the scene
 	
 	ETHEntityArray shipArray;
 	
@@ -115,7 +113,7 @@ void ETHCallback_Destroyer(ETHEntity @ ship)
 	}
 	
 	
-	//delimitando o movimento da Destroyer
+	//handle the screen so the Destroyer don't go out of the screen
 	if(ship.GetPositionXY().y > GetScreenSize().y)
 		ship.SetPositionXY(vector2(ship.GetPositionXY().x,GetScreenSize().y));
 	else if(ship.GetPositionXY().y < 0)

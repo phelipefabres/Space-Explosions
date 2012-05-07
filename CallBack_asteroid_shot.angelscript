@@ -4,9 +4,8 @@
 //Modelo de cada objeto
 
 
-//callback dos asteroides
+//callback of the asteroids
 
-//movimento do asteroid, no caso o 'AddToAngle' faz com que ele gire no próprio eixo no sentido horário em uma velocidade
 void ETHCallback_asteroid(ETHEntity@ asteroid)
 {
 	asteroid.SetColor(vector3(0,1,1));
@@ -16,10 +15,8 @@ void ETHCallback_asteroid(ETHEntity@ asteroid)
 		asteroid.AddToAngle(g_timeManager.unitsPerSecond(150.0f));
 	else if(asteroid.GetString("tipo") == "crazyAsteroid")
 	{
-		//cria o asteroide dinamicamente e faz ele se movimentar na cena
 		asteroid.AddToPositionXY(g_timeManager.unitsPerSecond(vector2(0,5))*asteroid.GetFloat("speed"));
 		
-		//deletar o objeto asteroide quando ele não estiver mais na cena
 		if(asteroid.GetPositionXY().y > GetScreenSize().y)
 			DeleteEntity(asteroid);
 	}
@@ -32,21 +29,18 @@ void ETHCallback_asteroid(ETHEntity@ asteroid)
 	}
 }
 
-//callback do tiro
+//callback of the shot
 
-//movimentando minha entidade 'tiro'
 void ETHCallback_shot(ETHEntity@ shot)
 {
 
 	
-	//movimento do tiro, no caso a direçao e a velocidade
 	
 		shot.AddToPositionXY(g_timeManager.unitsPerSecond(shot.GetVector2("direcao"))*shot.GetFloat("speed"));
 	
 		
 		
-		//controle de colisão do tiro. Criamos um Array de entidades que captura todas as entidades dos buckets
-		//se as entidades capturadas forem iguais a asteroid e nave, elas são deletadas pelo tiro
+		//handle the colision of the shot
 		ETHEntityArray shotArray;
 		
 		GetEntitiesFromBucket(GetBucket(shot.GetPositionXY()),shotArray);
@@ -70,7 +64,7 @@ void ETHCallback_shot(ETHEntity@ shot)
 		}
 
 	
-	//se o tiro ultrapassar o limite da tela, ele é deletado
+	//delete the shot when it go out of the screen
 		if(shot.GetPositionXY().y < 0 || shot.GetPositionXY().y > GetScreenSize().y)
 				DeleteEntity(shot);
 }

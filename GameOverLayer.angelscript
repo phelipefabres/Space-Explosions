@@ -3,6 +3,7 @@
 //Designer: Phelipe Fabres
 //Modelo de cada objeto
 
+//Main Layer class
 class GameOverLayer : UILayer
 {
 

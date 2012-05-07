@@ -4,9 +4,9 @@
 //Modelo de cada objeto
 
 
-//callback dos asteroides
+//callback of the ship with hp=2
 
-//movimento do asteroid, no caso o 'AddToAngle' faz com que ele gire no próprio eixo no sentido horário em uma velocidade
+
 void ETHCallback_boss(ETHEntity@ boss)
 {
 		boss.SetAngle(180.0f);
@@ -36,7 +36,7 @@ void ETHCallback_boss(ETHEntity@ boss)
 }
 
 
-//movimentando minha entidade 'tiro'
+//the others dinamycs ships 
 void ETHCallback_otherShip(ETHEntity@ otherShip)
 {
 	

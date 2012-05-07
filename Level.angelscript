@@ -3,6 +3,7 @@
 //Designer: Phelipe Fabres
 //Modelo de cada objeto
 
+//Main Level class
 class Level : GameState
 {
 
@@ -34,13 +35,11 @@ class Level : GameState
 		SetAmbientLight(vector3(1,1,1));
 		
 		
-		//loader de som, nesse caso o SoundEffect carrega o som na memória direto pois ele não será usado constantemente apenas em certos momentos.
 		LoadSoundEffect("soundfx/tiro.mp3");
 		LoadSoundEffect("soundfx/asteroide_explosao.mp3");
 		LoadSoundEffect("soundfx/explosion_huge.mp3");
 		
 		
-		//com o LoadMusic eu faço um Streaming da trilha em vez de carregar tudo na memória, assim eu não sobrecarrego o jogo
 		LoadMusic("soundfx/trilha.mp3");
 		LoopSample("soundfx/trilha.mp3",true);
 		PlaySample("soundfx/trilha.mp3");
@@ -61,7 +60,6 @@ class Level : GameState
 			StopSample("soundfx/trilha.mp3");
 		}
 		
-		//se a nave principal colidir, a cena acaba
 		if(SeekEntity("asteroid.ent") is null && SeekEntity("nave.ent") is null && SeekEntity("nave_chefe.ent") is null)
 		{
 			deadTime += g_timeManager.getLastFrameElapsedTime();
@@ -82,12 +80,10 @@ class Level : GameState
 		if (cont < 10)
 			time += g_timeManager.getLastFrameElapsedTime();
 			
-		//criação do asteroide na cena
 		ETHEntity @ crazyAsteroid;
 		ETHEntity @ otherShip;
 		ETHEntity @ boss;
 		
-		//a cada dois segundos ele "desce" na tela
 		if(time >= 2000)
 		{
 			AddEntity("asteroid.ent",vector3(randF(GetScreenSize().x),-30,0), crazyAsteroid);

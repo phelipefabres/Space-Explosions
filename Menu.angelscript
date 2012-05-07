@@ -3,6 +3,7 @@
 //Designer: Phelipe Fabres
 //Modelo de cada objeto
 
+//Menu Class
 class Menu : MainMenu
 {
 	
