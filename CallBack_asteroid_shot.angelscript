@@ -1,7 +1,5 @@
-﻿//Projeto 1
-//Jogo: Space Explosions
-//Designer: Phelipe Fabres
-//Modelo de cada objeto
+﻿//Asantee Games
+//Game: Space Explosions
 
 
 //callback of the asteroids
@@ -11,16 +9,17 @@ void ETHCallback_asteroid(ETHEntity@ asteroid)
 	asteroid.SetColor(vector3(0,1,1));
 	asteroid.SetFloat("speed",60.0f);
 	
-	if(asteroid.GetString("tipo") ==  "estatico")
+	//2 types of asteroids, the one place in the scene when we build it. And the other that we created in a randon way
+	if(asteroid.GetString("type") ==  "static")
 		asteroid.AddToAngle(g_timeManager.unitsPerSecond(150.0f));
-	else if(asteroid.GetString("tipo") == "crazyAsteroid")
+	else if(asteroid.GetString("type") == "randon")
 	{
 		asteroid.AddToPositionXY(g_timeManager.unitsPerSecond(vector2(0,5))*asteroid.GetFloat("speed"));
 		
 		if(asteroid.GetPositionXY().y > GetScreenSize().y)
 			DeleteEntity(asteroid);
 	}
-	
+	//if the "hp" of the entity is over, less/equal than 0, the entity is deleted
 	if(asteroid.GetInt("hp") <= 0)
 	{
 		AddEntity("explosion.ent",asteroid.GetPosition(),0);
@@ -35,8 +34,8 @@ void ETHCallback_shot(ETHEntity@ shot)
 {
 
 	
-	
-		shot.AddToPositionXY(g_timeManager.unitsPerSecond(shot.GetVector2("direcao"))*shot.GetFloat("speed"));
+		//when a shot is created by the Destroyer or the enemies the direction and speed are seted here
+		shot.AddToPositionXY(g_timeManager.unitsPerSecond(shot.GetVector2("direction"))*shot.GetFloat("speed"));
 	
 		
 		
@@ -48,10 +47,10 @@ void ETHCallback_shot(ETHEntity@ shot)
 		for(uint i=0; i<shotArray.size(); i++)
 		{
 			
-			if(shotArray[i].GetUInt("destrutivel") == 1)
+			if(shotArray[i].GetUInt("destroyable") == 1)
 			{
 				
-					if(shotArray[i].GetUInt("time") != shot.GetUInt("time"))
+					if(shotArray[i].GetUInt("team") != shot.GetUInt("team"))
 					{
 						if(distance(shot.GetPositionXY(),shotArray[i].GetPositionXY()) < 40 )
 						{

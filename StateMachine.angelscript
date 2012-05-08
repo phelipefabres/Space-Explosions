@@ -1,4 +1,8 @@
-﻿const string DEFAULT_ONSCENELOADED = "onSceneLoaded";
+﻿//Asantee Games
+//Game: Space Explosions
+
+
+const string DEFAULT_ONSCENELOADED = "onSceneLoaded";
 const string DEFAULT_ONSCENEUPDATED = "onSceneUpdated";
 
 
@@ -28,15 +32,3 @@ class StateMachine
 
 StateMachine g_stateManager;
 
-/*void runCurrentOnResumeFunction()
-	{
-		m_currentState.onResume();
-	}
-
-	string getCurrentStateName() const
-	{
-		if (m_currentState !is null)
-			return m_currentState.getName();
-		else
-			return "";
-	}*/

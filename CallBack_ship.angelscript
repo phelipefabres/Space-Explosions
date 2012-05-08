@@ -1,7 +1,5 @@
-﻿//Projeto 1
-//Jogo: Space Explosions
-//Designer: Phelipe Fabres
-//Modelo de cada objeto
+﻿//Asantee Games
+//Game: Space Explosions
 
 
 //callback os the ships statics
@@ -11,6 +9,7 @@ void ETHCallback_ship(ETHEntity @ ship)
 {
 	ship.SetColor(vector3(1,0,0));
 	
+	//if the "hp" of the entity is over, less/equal than 0, the entity is deleted
 	if(ship.GetInt("hp") <= 0)
 	{
 		AddEntity("explosion.ent",ship.GetPosition(),0);
@@ -64,11 +63,12 @@ void ETHCallback_Destroyer(ETHEntity @ ship)
 	
 	if(input.GetKeyState(K_SPACE) == KS_HIT)
 	{
-		addShot(1,vector2(0,-5),ship.GetPosition());
+		addShot(1,vector2(0,-5),ship.GetPosition(),60.0f);
 		PlaySample("soundfx/tiro.mp3");
 		
 	}
 	
+	//if the "hp" of the entity is over, less/equal than 0, the entity is deleted
 	if(ship.GetInt("hp") <= 0)
 	{
 		AddEntity("explosion.ent",ship.GetPosition(),0);
@@ -81,21 +81,21 @@ void ETHCallback_Destroyer(ETHEntity @ ship)
 	
 	ETHEntityArray shipArray;
 	
-	vector2 BucketDaNave(GetBucket(ship.GetPositionXY()));
+	vector2 BucketShip(GetBucket(ship.GetPositionXY()));
 	
-	GetEntitiesFromBucket(BucketDaNave,shipArray);
-	GetEntitiesFromBucket(BucketDaNave + vector2(0,-1),shipArray);
-	GetEntitiesFromBucket(BucketDaNave + vector2(0,1),shipArray);
-	GetEntitiesFromBucket(BucketDaNave + vector2(-1,0),shipArray);
-	GetEntitiesFromBucket(BucketDaNave + vector2(1,0),shipArray);
-	GetEntitiesFromBucket(BucketDaNave + vector2(-1,-1),shipArray);
-	GetEntitiesFromBucket(BucketDaNave + vector2(1,1),shipArray);
+	GetEntitiesFromBucket(BucketShip,shipArray);
+	GetEntitiesFromBucket(BucketShip + vector2(0,-1),shipArray);
+	GetEntitiesFromBucket(BucketShip + vector2(0,1),shipArray);
+	GetEntitiesFromBucket(BucketShip + vector2(-1,0),shipArray);
+	GetEntitiesFromBucket(BucketShip + vector2(1,0),shipArray);
+	GetEntitiesFromBucket(BucketShip + vector2(-1,-1),shipArray);
+	GetEntitiesFromBucket(BucketShip + vector2(1,1),shipArray);
 
 	for(uint i=0; i<shipArray.size(); i++)
 	{
-		if(shipArray[i].GetUInt("destrutivel") == 1)
+		if(shipArray[i].GetUInt("destroyable") == 1)
 		{
-				if(shipArray[i].GetUInt("time") != ship.GetUInt("time"))
+				if(shipArray[i].GetUInt("team") != ship.GetUInt("team"))
 				{
 					if(distance(ship.GetPositionXY(),shipArray[i].GetPositionXY()) < 64 )
 					{
@@ -124,3 +124,4 @@ void ETHCallback_Destroyer(ETHEntity @ ship)
 		ship.SetPositionXY(vector2(0,ship.GetPositionXY().y));
 	
 }
+

@@ -1,7 +1,7 @@
-﻿//Projeto 1
-//Jogo: Space Explosions
-//Designer: Phelipe Fabres
-//Modelo de cada objeto
+﻿//Asantee Games
+//Game: Space Explosions
+
+
 
 //Main Level class
 class Level : GameState
@@ -88,7 +88,7 @@ class Level : GameState
 		{
 			AddEntity("asteroid.ent",vector3(randF(GetScreenSize().x),-30,0), crazyAsteroid);
 			AddEntity("otherShip.ent",vector3(randF(GetScreenSize().x),-30,0),otherShip);
-			crazyAsteroid.SetString("tipo", "crazyAsteroid");//seta o tipo dele como ambulante para se diferenciar do outro tipo
+			crazyAsteroid.SetString("type", "randon");
 			time =0;
 			cont++;
 		}
@@ -98,10 +98,10 @@ class Level : GameState
 		
 		
 		
-		if(timeBoss >= 1000)
+		if(timeBoss >= 3000)
 		{
 			AddEntity("boss.ent",vector3(randF(GetScreenSize().x),-30,0),boss);
-			boss.SetUInt("tiro",0);
+			boss.SetUInt("shot",0);
 			timeBoss=0;
 			cont2++;
 		}

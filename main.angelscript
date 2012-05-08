@@ -1,4 +1,8 @@
-﻿#include "ETHFramework/IncludeModules.angelscript"
+﻿//Asantee Games
+//Game: Space Explosions
+
+
+#include "ETHFramework/IncludeModules.angelscript"
 #include "Menu.angelscript"
 #include "Level.angelscript"
 #include "CallBack_asteroid_shot.angelscript"

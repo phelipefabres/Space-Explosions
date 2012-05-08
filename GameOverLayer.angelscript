@@ -1,9 +1,9 @@
-﻿//Projeto 1
-//Jogo: Space Explosions
-//Designer: Phelipe Fabres
-//Modelo de cada objeto
+﻿//Asantee Games
+//Game: Space Explosions
 
-//Main Layer class
+
+//Game Over Layer class
+//put the icons in the scene when the game is over
 class GameOverLayer : UILayer
 {
 
