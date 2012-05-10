@@ -32,6 +32,8 @@ class Level : GameState
 	{
 		GameState::preLoop();
 		
+		g_scale.scaleEntities();
+		
 		SetAmbientLight(vector3(1,1,1));
 		
 		
@@ -86,8 +88,10 @@ class Level : GameState
 		
 		if(time >= 2000)
 		{
-			AddEntity("asteroid.ent",vector3(randF(GetScreenSize().x),-30,0), crazyAsteroid);
-			AddEntity("otherShip.ent",vector3(randF(GetScreenSize().x),-30,0),otherShip);
+			//AddEntity("asteroid.ent",vector3(randF(GetScreenSize().x),-30,0), crazyAsteroid);
+			AddScaledEntity("asteroid.ent",vector3(randF(GetScreenSize().x),g_scale.scale(-30),0),g_scale.getScale(), crazyAsteroid); 
+			//AddEntity("otherShip.ent",vector3(randF(GetScreenSize().x),-30,0),otherShip);
+			AddScaledEntity("otherShip.ent",vector3(randF(GetScreenSize().x),g_scale.scale(-30),0),g_scale.getScale(),otherShip);
 			crazyAsteroid.SetString("type", "randon");
 			time =0;
 			cont++;
@@ -100,7 +104,8 @@ class Level : GameState
 		
 		if(timeBoss >= 3000)
 		{
-			AddEntity("boss.ent",vector3(randF(GetScreenSize().x),-30,0),boss);
+			//AddEntity("boss.ent",vector3(randF(GetScreenSize().x),-30,0),boss);
+			AddScaledEntity("boss.ent",g_scale.scale(vector3(randF(GetScreenSize().x),-30,0)),g_scale.getScale(),boss);
 			boss.SetUInt("shot",0);
 			timeBoss=0;
 			cont2++;

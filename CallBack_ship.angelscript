@@ -12,7 +12,8 @@ void ETHCallback_ship(ETHEntity @ ship)
 	//if the "hp" of the entity is over, less/equal than 0, the entity is deleted
 	if(ship.GetInt("hp") <= 0)
 	{
-		AddEntity("explosion.ent",ship.GetPosition(),0);
+		//AddEntity("explosion.ent",ship.GetPosition(),0);
+		AddScaledEntity("explosion.ent",ship.GetPosition(),g_scale.getScale());
 		DeleteEntity(ship);
 		PlaySample("soundfx/explosion_huge.mp3");
 	}
@@ -28,7 +29,7 @@ void ETHCallback_Destroyer(ETHEntity @ ship)
 	
 	
 	
-	float speed = g_timeManager.unitsPerSecond(120.0f);
+	float speed = g_timeManager.scaledUnitsPerSecond(120.0f);
 	
 	//keyboard handle
 	if(input.KeyDown(K_SHIFT))
@@ -71,7 +72,8 @@ void ETHCallback_Destroyer(ETHEntity @ ship)
 	//if the "hp" of the entity is over, less/equal than 0, the entity is deleted
 	if(ship.GetInt("hp") <= 0)
 	{
-		AddEntity("explosion.ent",ship.GetPosition(),0);
+		//AddEntity("explosion.ent",ship.GetPosition(),0);
+		AddScaledEntity("explosion.ent",ship.GetPosition(),g_scale.getScale());
 		DeleteEntity(ship);
 		PlaySample("soundfx/explosion_huge.mp3");
 		return;

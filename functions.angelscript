@@ -9,5 +9,5 @@ void addShot(const uint team, const vector2 direction, const vector3 position, c
 	AddEntity("shot.ent",position,shot);
 	shot.SetUInt("team",team);
 	shot.SetVector2("direction",direction);
-	shot.SetFloat("speed",speed);
+	shot.SetFloat("speed",g_scale.scale(speed));
 }

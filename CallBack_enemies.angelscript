@@ -8,7 +8,7 @@
 void ETHCallback_boss(ETHEntity@ boss)
 {
 		boss.SetAngle(180.0f);
-		boss.AddToPositionXY(g_timeManager.unitsPerSecond(vector2(0,3))*20.0f);
+		boss.AddToPositionXY(g_timeManager.scaledUnitsPerSecond(vector2(0,3))*20.0f);
 		
 		if(boss.GetPositionXY().y > GetScreenSize().y)
 			DeleteEntity(boss);
@@ -16,7 +16,8 @@ void ETHCallback_boss(ETHEntity@ boss)
 		//if the "hp" of the entity is over, less/equal than 0, the entity is deleted
 		if(boss.GetInt("hp") <= 0)
 		{
-			AddEntity("explosion.ent",boss.GetPosition(),0);
+			//AddEntity("explosion.ent",boss.GetPosition(),0);
+			AddScaledEntity("explosion.ent",boss.GetPosition(),g_scale.getScale());
 			DeleteEntity(boss);
 			PlaySample("soundfx/explosion_huge.mp3");
 		}
@@ -39,13 +40,14 @@ void ETHCallback_otherShip(ETHEntity@ otherShip)
 {
 	
 		otherShip.SetAngle(180.0f);
-		otherShip.AddToPositionXY(g_timeManager.unitsPerSecond(vector2(0,3))*30.0f);
+		otherShip.AddToPositionXY(g_timeManager.scaledUnitsPerSecond(vector2(0,3))*30.0f);
 		if(otherShip.GetPositionXY().y > GetScreenSize().y)
 			DeleteEntity(otherShip);
 //if the "hp" of the entity is over, less/equal than 0, the entity is deleted			
 		if(otherShip.GetInt("hp") <= 0)
 		{
-			AddEntity("explosion.ent",otherShip.GetPosition(),0);
+			//AddEntity("explosion.ent",otherShip.GetPosition(),0);
+			AddScaledEntity("explosion.ent",otherShip.GetPosition(),g_scale.getScale());
 			DeleteEntity(otherShip);
 			PlaySample("soundfx/explosion_huge.mp3");
 		}	
